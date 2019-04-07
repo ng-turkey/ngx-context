@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceRoot}",
+      "runtimeArgs": ["--preserve-symlinks"]
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Start & Launch Chrome",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceRoot}",
+      "runtimeArgs": ["--preserve-symlinks"],
+      "preLaunchTask": "yarn: start"
+    }
+  ]
+}
