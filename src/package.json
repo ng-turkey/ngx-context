@@ -1,0 +1,30 @@
+{
+  "name": "ngx-context",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ng-turkey/ngx-context.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/ng-turkey/ngx-context#readme",
+  "bugs": {
+    "url": "https://github.com/ng-turkey/ngx-context/issues"
+  },
+  "description": "Angular Context: Pass properties down the component tree effortlessly.",
+  "keywords": [
+    "angular",
+    "ngx",
+    "context",
+    "prop-drilling",
+    "data-binding",
+    "property binding",
+    "utility",
+    "provider",
+    "consumer",
+    "router-outlet"
+  ],
+  "peerDependencies": {
+    "@angular/core": ">=2.0.0 <8.0.0",
+    "rxjs": ">=6.0.0 || ^5.6.0-forward-compat.4"
+  }
+}
