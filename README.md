@@ -4,6 +4,8 @@ Angular Context is a library to bind data to deeply nested child components **wi
 
 If you would like to have further information on why you need a library like this, you may find the [reasons](#reasons-to-use-this-library) below. Otherwise, skip to the [quickstart](#quickstart) or [usage](#usage) section.
 
+Check [sample application](https://stackblitz.com/edit/ngx-context) out for a preview.
+
 ## Reasons to Use This Library
 
 Data-binding and input properties are great. However, working with them has some challenges:
@@ -278,7 +280,7 @@ There are several issues which are simply not addressed yet or impossible with c
 
 - [x] Test coverage
 
-- [ ] Documentation & examples
+- [x] Documentation & examples
 
 - [ ] Permissive license
 
