@@ -83,7 +83,7 @@ type Excluded = 'provided' | 'contextMap' | 'consume';
 
 function shouldSyncProvidedProperty(
   this: IContext,
-  prop: Exclude<keyof TestProviderComponent | keyof TestConsumerComponent, Excluded>,
+  prop: Exclude<keyof TestProviderComponent & keyof TestConsumerComponent, Excluded>,
 ): void {
   // Query component instances
   this.parent = this.fixture.debugElement.componentInstance;
