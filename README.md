@@ -1,6 +1,6 @@
 # ngx-context (a.k.a. Angular Context)
 
-Angular Context is a library to transfer control of a child component to a parent component high above in a nested component tree **without passing properties through other components or getting blocked by a router outlet**.
+Angular Context is a library to bind data to deeply nested child components **without passing properties through other components or getting blocked by a router outlet**.
 
 If you would like to have further information on why you need a library like this, you may find the [reasons](#reasons-to-use-this-library) below. Otherwise, skip to the [quickstart](#quickstart) or [usage](#usage) section.
 
@@ -12,7 +12,7 @@ Data-binding and input properties are great. However, working with them has some
 - When a component is loaded via `router-outlet`, data-binding is not available and prop-drilling is no longer an option.
 - Providing data through state management has its own caveat: Since connecting presentational (dumb) components directly to a specific state breaks their reusability, they have to be wrapped by container (smart) components instead and that usually is additional work.
 
-This library is designed to improve developer experience by fixing all issues above. It provides context through dependency injection system behind-the-scenes and lets your deeply nested dumb components consume them easily. It is conceptually influenced by [React Context](https://reactjs.org/docs/context.html), but is 100% tailored for Angular.
+This library is designed to improve developer experience by fixing all issues above. It provides context through dependency injection system behind-the-scenes and lets your deeply nested dumb components consume this context easily. It is conceptually influenced by [React Context](https://reactjs.org/docs/context.html), but differs in implementation and is 100% tailored for Angular.
 
 ## Quickstart
 
@@ -265,9 +265,9 @@ Consumed property names can be mapped.
 
 - [x] Component to provide context
 
-- [ ] Component and directive to consume context
+- [x] Component and directive to consume context
 
-- [ ] Test coverage
+- [x] Test coverage
 
 - [ ] Documentation & examples
 
