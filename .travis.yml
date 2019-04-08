@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - "10"
+  - "11"
+dist: trusty
+addons:
+  chrome: stable
+sudo: required
+cache:
+  yarn: true
+  directories:
+    - node_modules
+before_script:
+  - yarn global add @angular/cli
+script:
+  - yarn ci-test
+  - yarn build

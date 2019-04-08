@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "ci-test": "ng test --code-coverage --watch=false",
     "release": "cp README.md dist/ngx-context/README.md && cd dist/ngx-context && npm publish && cd ../..",
     "verdaccio": "cd dist/ngx-context && npm publish --registry http://localhost:4873 && cd ../..",
     "unverdaccio": "cd dist/ngx-context && npm unpublish --registry http://localhost:4873 --force && cd ../.."
