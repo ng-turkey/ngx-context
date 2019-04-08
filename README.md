@@ -286,7 +286,7 @@ There are several issues which are simply not addressed yet or impossible with c
 
 - [x] Inclusive code of conduct
 
-- [ ] Issue submission templates
+- [x] Issue submission templates
 
 - [ ] Contribution guidelines
 
