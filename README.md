@@ -16,6 +16,8 @@ Data-binding and input properties are great. However, working with them has some
 
 This library is designed to improve developer experience by fixing all issues above. It provides context through dependency injection system behind-the-scenes and lets your deeply nested dumb components consume this context easily. It is conceptually influenced by [React Context](https://reactjs.org/docs/context.html), but differs in implementation and is 100% tailored for Angular.
 
+![](./assets/context.svg)
+
 ## Quickstart
 
 ### Installation
