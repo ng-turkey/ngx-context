@@ -15,3 +15,4 @@ before_script:
 script:
   - yarn ci-test
   - yarn build
+  - yarn codecov -t $CODECOV_TOKEN
