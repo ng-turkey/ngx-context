@@ -12,17 +12,20 @@
     {
       "label": "yarn: lint",
       "type": "shell",
-      "command": "yarn lint"
+      "command": "yarn lint",
+      "problemMatcher": []
     },
     {
       "label": "yarn: test",
       "type": "shell",
-      "command": "yarn test"
+      "command": "yarn test",
+      "problemMatcher": []
     },
     {
       "label": "yarn: e2e",
       "type": "shell",
-      "command": "yarn e2e"
+      "command": "yarn e2e",
+      "problemMatcher": []
     },
     {
       "label": "yarn: build",
