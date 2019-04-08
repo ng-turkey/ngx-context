@@ -2,6 +2,9 @@ language: node_js
 node_js:
   - "11"
 dist: trusty
+env:
+  global:
+    - CC_TEST_REPORTER_ID=$CC_REPORTER_ID
 addons:
   chrome: stable
 sudo: required
@@ -11,7 +14,14 @@ cache:
     - node_modules
 before_script:
   - yarn global add @angular/cli
+  - yarn global add nyc
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 script:
   - yarn ci-test
+  - nyc --reporter=lcov yarn run unit
   - yarn build
   - yarn codecov -t $CODECOV_TOKEN
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
