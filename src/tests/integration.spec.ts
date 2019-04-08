@@ -8,7 +8,6 @@ import { ContextProviderComponent } from '../lib/provider.component';
 import { TestConsumerComponent } from './test-consumer.component';
 import { TestMiddleComponent } from './test-middle.component';
 import { TestProviderComponent } from './test-provider.component';
-import { Excluded as SharedExcluded } from './consumer.routine';
 
 type TConsumer = ContextConsumerDirective<TestConsumerComponent>;
 type TProvider = ContextProviderComponent<TestProviderComponent>;
@@ -80,11 +79,11 @@ describe('Context Provider & Consumer', function(this: IContext) {
   }));
 });
 
-type Excluded = 'provided' | 'contextMap' | 'consume' | SharedExcluded;
+type Excluded = 'provided' | 'contextMap' | 'consume';
 
 function shouldSyncProvidedProperty(
   this: IContext,
-  prop: Exclude<keyof TestProviderComponent | keyof ContextConsumerDirective, Excluded>,
+  prop: Exclude<keyof TestProviderComponent | keyof TestConsumerComponent, Excluded>,
 ): void {
   // Query component instances
   this.parent = this.fixture.debugElement.componentInstance;
