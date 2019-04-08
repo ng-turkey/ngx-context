@@ -139,7 +139,7 @@ export function execRoutineTestsForConsumer(this: TestModel) {
   });
 }
 
-type Excluded = 'component' | 'ngOnChanges' | 'ngOnInit' | 'ngOnDestroy';
+export type Excluded = 'component' | 'ngOnChanges' | 'ngOnInit' | 'ngOnDestroy';
 
 function setProp(
   this: TestModel,

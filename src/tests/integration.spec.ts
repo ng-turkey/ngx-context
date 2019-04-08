@@ -8,6 +8,7 @@ import { ContextProviderComponent } from '../lib/provider.component';
 import { TestConsumerComponent } from './test-consumer.component';
 import { TestMiddleComponent } from './test-middle.component';
 import { TestProviderComponent } from './test-provider.component';
+import { Excluded as SharedExcluded } from './consumer.routine';
 
 type TConsumer = ContextConsumerDirective<TestConsumerComponent>;
 type TProvider = ContextProviderComponent<TestProviderComponent>;
@@ -40,7 +41,7 @@ describe('Context Provider & Consumer', function(this: IContext) {
 
     this.fixture = TestBed.createComponent(TestProviderComponent);
 
-    runAsserts.bind(this);
+    shouldSyncProvidedProperty.bind(this, 'target');
   }));
 
   it('should work through router outlet', fakeAsync(() => {
@@ -74,12 +75,17 @@ describe('Context Provider & Consumer', function(this: IContext) {
       this.fixture.debugElement.injector.get(Router).initialNavigation();
       tick();
 
-      runAsserts.bind(this);
+      shouldSyncProvidedProperty.bind(this, 'target');
     });
   }));
 });
 
-function runAsserts(this: IContext): void {
+type Excluded = 'provided' | 'contextMap' | 'consume' | SharedExcluded;
+
+function shouldSyncProvidedProperty(
+  this: IContext,
+  prop: Exclude<keyof TestProviderComponent | keyof ContextConsumerDirective, Excluded>,
+): void {
   // Query component instances
   this.parent = this.fixture.debugElement.componentInstance;
   this.middle = this.fixture.debugElement.query(
@@ -89,15 +95,15 @@ function runAsserts(this: IContext): void {
     By.directive(ContextConsumerDirective),
   ).componentInstance;
 
-  expect(this.child.target).not.toBe(this.parent.target);
+  expect(this.child[prop]).not.toBe(this.parent[prop]);
 
   // Provide property
-  this.parent.provided = 'target';
-  this.middle.provided = 'target';
+  this.parent.provided = prop;
+  this.middle.provided = prop;
 
   // Detect changes
   this.fixture.detectChanges();
   tick();
 
-  expect(this.child.target).toBe(this.parent.target);
+  expect(this.child[prop]).toBe(this.parent[prop]);
 }
