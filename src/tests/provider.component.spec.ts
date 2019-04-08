@@ -54,11 +54,11 @@ describe('ContextProviderComponent', function(this: UProviderComponent) {
     });
 
     it('should have empty object as contextMap (undefined/null input)', () => {
-      setProp.call(this, 'provide', undefined);
+      setProp.call(this, 'contextMap', undefined);
 
       expect(this.provider.contextMap).toEqual({});
 
-      setProp.call(this, 'provide', null);
+      setProp.call(this, 'contextMap', null);
 
       expect(this.provider.contextMap).toEqual({});
     });
