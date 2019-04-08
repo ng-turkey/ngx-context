@@ -19,7 +19,6 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - yarn ci-test
   - nyc --reporter=lcov yarn run ci-test
   - yarn build
   - yarn codecov -t $CODECOV_TOKEN
