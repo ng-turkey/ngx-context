@@ -284,7 +284,7 @@ There are several issues which are simply not addressed yet or impossible with c
 
 - [x] Permissive license
 
-- [ ] Inclusive code of conduct
+- [x] Inclusive code of conduct
 
 - [ ] Issue submission templates
 
