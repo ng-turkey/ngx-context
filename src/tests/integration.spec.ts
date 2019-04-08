@@ -40,26 +40,7 @@ describe('Context Provider & Consumer', function(this: IContext) {
 
     this.fixture = TestBed.createComponent(TestProviderComponent);
 
-    // Query component instances
-    this.parent = this.fixture.debugElement.componentInstance;
-    this.middle = this.fixture.debugElement.query(
-      By.directive(TestMiddleComponent),
-    ).componentInstance;
-    this.child = this.fixture.debugElement.query(
-      By.directive(ContextConsumerDirective),
-    ).componentInstance;
-
-    expect(this.child.target).not.toBe(this.parent.target);
-
-    // Provide property
-    this.parent.provided = 'target';
-    this.middle.provided = 'target';
-
-    // Detect changes
-    this.fixture.detectChanges();
-    tick();
-
-    expect(this.child.target).toBe(this.parent.target);
+    shouldSyncProvidedProperty.bind(this, 'target');
   }));
 
   it('should work through router outlet', fakeAsync(() => {
@@ -93,26 +74,35 @@ describe('Context Provider & Consumer', function(this: IContext) {
       this.fixture.debugElement.injector.get(Router).initialNavigation();
       tick();
 
-      // Query component instances
-      this.parent = this.fixture.debugElement.componentInstance;
-      this.middle = this.fixture.debugElement.query(
-        By.directive(TestMiddleComponent),
-      ).componentInstance;
-      this.child = this.fixture.debugElement.query(
-        By.directive(ContextConsumerDirective),
-      ).componentInstance;
-
-      expect(this.child.target).not.toBe(this.parent.target);
-
-      // Provide property
-      this.parent.provided = 'target';
-      this.middle.provided = 'target';
-
-      // Detect changes
-      this.fixture.detectChanges();
-      tick();
-
-      expect(this.child.target).toBe(this.parent.target);
+      shouldSyncProvidedProperty.bind(this, 'target');
     });
   }));
 });
+
+type Excluded = 'provided' | 'contextMap' | 'consume';
+
+function shouldSyncProvidedProperty(
+  this: IContext,
+  prop: Exclude<keyof TestProviderComponent & keyof TestConsumerComponent, Excluded>,
+): void {
+  // Query component instances
+  this.parent = this.fixture.debugElement.componentInstance;
+  this.middle = this.fixture.debugElement.query(
+    By.directive(TestMiddleComponent),
+  ).componentInstance;
+  this.child = this.fixture.debugElement.query(
+    By.directive(ContextConsumerDirective),
+  ).componentInstance;
+
+  expect(this.child[prop]).not.toBe(this.parent[prop]);
+
+  // Provide property
+  this.parent.provided = prop;
+  this.middle.provided = prop;
+
+  // Detect changes
+  this.fixture.detectChanges();
+  tick();
+
+  expect(this.child[prop]).toBe(this.parent[prop]);
+}
