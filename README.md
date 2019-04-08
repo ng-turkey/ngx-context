@@ -164,47 +164,6 @@ Router outlets have no effect on context and can be safely used.
 
 ```
 
-### ContextProviderDirective
-
-The name of the props to be provided is set by `contextProvider` input and it can take `string` or `Array<string>` values.
-
-```HTML
-<!-- consumer will consume someProp and someOtherProp -->
-
-<parent-component contextProvider="someProp someOtherProp"></parent-component>
-
-```
-
-— or —
-
-```HTML
-<!-- consumer will consume someProp and someOtherProp -->
-
-<parent-component [contextProvider]="['someProp', 'someOtherProp']"></parent-component>
-
-```
-
-Provided property names can be dynamically set.
-
-```HTML
-<!-- consumer will consume properties defined by propertiesToProvide -->
-
-<parent-component [contextProvider]="propertiesToProvide"></parent-component>
-
-```
-
-Provided property names can be mapped.
-
-```HTML
-<!-- consumer will consume someOtherPropName -->
-
-<parent-component
-  contextProvider="someProp"
-  [contextMap]="{someProp: 'someOtherPropName'}"
-></parent-component>
-
-```
-
 ### ContextConsumerComponent
 
 The easiest way to consume a context is to place a `ContextConsumerComponent` inside a child component. It will be able to consume context once provided and behave normally when not.
@@ -304,9 +263,9 @@ Consumed property names can be mapped.
 
 ## Roadmap
 
-- [ ] Components to provide and consume context
+- [x] Component to provide context
 
-- [ ] Directives to provide and consume context
+- [ ] Component and directive to consume context
 
 - [ ] Test coverage
 
