@@ -10,7 +10,7 @@
   "bugs": {
     "url": "https://github.com/ng-turkey/ngx-context/issues"
   },
-  "description": "Angular Context: Pass properties down the component tree effortlessly.",
+  "description": "Angular Context: Easy property binding for router outlet and nested component trees.",
   "keywords": [
     "angular",
     "ngx",
