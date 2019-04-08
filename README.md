@@ -282,7 +282,7 @@ There are several issues which are simply not addressed yet or impossible with c
 
 - [x] Documentation & examples
 
-- [ ] Permissive license
+- [x] Permissive license
 
 - [ ] Inclusive code of conduct
 
