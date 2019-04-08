@@ -288,7 +288,7 @@ There are several issues which are simply not addressed yet or impossible with c
 
 - [x] Issue submission templates
 
-- [ ] Contribution guidelines
+- [x] Contribution guidelines
 
 - [ ] CI integrations
 
