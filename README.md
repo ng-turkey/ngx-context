@@ -261,6 +261,15 @@ Consumed property names can be mapped.
 
 ```
 
+## Caveats / Trade-offs
+
+There are several issues which are simply not addressed yet or impossible with currently available tools.
+
+- There can be only one provider for any component sub-tree, altough using a provider in combination with a consumer would help transfer parent provider down the tree.
+- Several consumers can consume the same provider, but a consumer can only have one provider (first provider up the tree).
+- There is a performance penalty to be paid due to use of getters and setters. Although this penalty is kept as small as possible, it is not benchmarked yet.
+- Debugging may become more difficult for child components, because their behavior will be defined by the context magically provided by some parent. ¯\\\_(ツ)\_/¯
+
 ## Roadmap
 
 - [x] Component to provide context
@@ -279,6 +288,6 @@ Consumed property names can be mapped.
 
 - [ ] Contribution guidelines
 
-- [ ] GitHub Pages implementation
-
 - [ ] CI integrations
+
+- [ ] Benchmarks
