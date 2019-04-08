@@ -299,6 +299,6 @@ There are several issues which are simply not addressed yet or impossible with c
 
 - [x] Contribution guidelines
 
-- [ ] CI integrations
+- [x] CI integrations
 
 - [ ] Benchmarks
