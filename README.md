@@ -1,4 +1,5 @@
 # ngx-context (a.k.a. Angular Context)
+
 <p align="center">
   <a href="https://travis-ci.org/ng-turkey/ngx-context"><img src="https://travis-ci.org/ng-turkey/ngx-context.svg?branch=master"/></a>
   <a href="https://codeclimate.com/github/ng-turkey/ngx-context/maintainability"><img src="https://api.codeclimate.com/v1/badges/5115f5820cd9dfc5c409/maintainability" /></a>
@@ -7,11 +8,12 @@
   <img src="https://img.shields.io/github/license/ng-turkey/ngx-context.svg" />
   <a href="https://twitter.com/ngTurkiye"><img src="https://img.shields.io/twitter/follow/ngTurkiye.svg?label=Follow"/></a>
 </p>
+
 Angular Context is a library to bind data to deeply nested child components **without passing properties through other components or getting blocked by a router outlet**.
 
 If you would like to have further information on why you need a library like this, you may find the [reasons](#reasons-to-use-this-library) below. Otherwise, skip to the [quickstart](#quickstart) or [usage](#usage) section.
 
-Check [sample application](https://stackblitz.com/edit/ngx-context) out for a preview.
+Check [demo application](https://stackblitz.com/edit/ngx-context) out for a preview.
 
 ## Reasons to Use This Library
 
@@ -286,6 +288,8 @@ There are several issues which are simply not addressed yet or impossible with c
 - [x] Component to provide context
 
 - [x] Component and directive to consume context
+
+- [ ] Directive to dispose context
 
 - [x] Test coverage
 
