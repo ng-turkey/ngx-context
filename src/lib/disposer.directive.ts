@@ -7,10 +7,10 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { ContextProviderComponent } from 'ngx-context';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { parseKeys } from './internals';
+import { ContextProviderComponent } from './provider.component';
 
 @Directive({
   selector: '[contextDisposer]',
