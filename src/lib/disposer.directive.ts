@@ -8,7 +8,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { parseKeys } from './internals';
 import { ContextProviderComponent } from './provider.component';
 
@@ -47,12 +47,15 @@ export class ContextDisposerDirective {
 
     if (this.provider.provide.length)
       this.provider.change$
-        .pipe(takeUntil(this.destroy$))
+        .pipe(
+          takeUntil(this.destroy$),
+          filter(key => !!key),
+        )
         .subscribe(providerKey => this.syncProperties(disposed, providerKey));
   }
 
   private reset(): void {
-    this.view = this.vcRef.createEmbeddedView(this.tempRef, new ContextDisposal());
+    this.view = this.vcRef.createEmbeddedView(this.tempRef, new Context());
   }
 
   private syncProperties(disposed: string[], providerKey: string): void {
@@ -64,6 +67,7 @@ export class ContextDisposerDirective {
 
     this.view.context.$implicit[key] = value;
     this.view.context[key] = value;
+    this.view.detectChanges();
   }
 
   ngOnChanges() {
@@ -80,6 +84,6 @@ export class ContextDisposerDirective {
   }
 }
 
-export class ContextDisposal {
+export class Context {
   $implicit: { [key: string]: any } = {};
 }
