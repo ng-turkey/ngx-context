@@ -23,7 +23,7 @@ Data-binding and input properties are great. However, working with them has some
 - When a component is loaded via `router-outlet`, data-binding is not available and prop-drilling is no longer an option.
 - Providing data through state management has its own caveat: Since connecting presentational (dumb) components directly to a specific state breaks their reusability, they have to be wrapped by container (smart) components instead and that usually is additional work.
 
-This library is designed to improve developer experience by fixing all issues above. It provides context through dependency injection system behind-the-scenes and lets your deeply nested dumb components consume this context easily. It is conceptually influenced by [React Context](https://reactjs.org/docs/context.html), but differs in implementation and is 100% tailored for Angular.
+This library is designed to improve developer experience by fixing all issues above. It provides context through dependency injection system behind-the-scenes and lets your deeply nested dumb components consume this context easily. It is inspired by [React Context](https://reactjs.org/docs/context.html), but differs in implementation and is 100% tailored for Angular.
 
 ![](./assets/context.svg)
 
@@ -361,7 +361,7 @@ There are several issues which are simply not addressed yet or impossible with c
 
 - [x] Component and directive to consume context
 
-- [ ] Directive to dispose context
+- [x] Directive to dispose context
 
 - [x] Test coverage
 
