@@ -274,6 +274,78 @@ Consumed property names can be mapped.
 
 ```
 
+### ContextDisposerDirective
+
+There are some cases where you will need the context on a higher level and end up putting properties on a middle component's class. For example, in order to make [reactive forms](https://angular.io/guide/reactive-forms) work, a `ContextConsumerComponent` will most likely be used and the consumed properties will have to be added to the wrapper component. This is usually not the preferred result. After all, we are trying to keep intermediary components as clean as possible. In such a case, you can use `ContextDisposerDirective` on an `<ng-template>` and make use of [template input variables](https://angular.io/guide/structural-directives#template-input-variable).
+
+```HTML
+<!-- disposer will dispose any property provided under context -->
+
+<ng-template contextDisposer let-context>
+  <child-component [someProp]="context.someProp"></child-component>
+</ng-template>
+
+```
+
+The name of specific props to be disposed can be set by `contextDisposer` input and it can take `string` or `Array<string>` values.
+
+```HTML
+<!-- disposer will dispose someProp and someOtherProp under context -->
+
+<ng-template contextDisposer="someProp someOtherProp" let-context>
+  <child-component
+    [prop1]="context.someProp"
+    [prop2]="context.someOtherProp"
+  ></child-component>
+</ng-template>
+
+```
+
+— or —
+
+```HTML
+<!-- disposer will dispose someProp and someOtherProp under context -->
+
+<ng-template contextDisposer="['someProp', 'someOtherProp']" let-context>
+  <child-component
+    [prop1]="context.someProp"
+    [prop2]="context.someOtherProp"
+  ></child-component>
+</ng-template>
+
+```
+
+Properties to dispose can be dynamically set.
+
+```HTML
+<!-- disposer will dispose properties defined by propertiesToDispose under context -->
+
+<ng-template [contextDisposer]="propertiesToDispose" let-context>
+  <child-component
+    [prop1]="context.someProp"
+    [prop2]="context.someOtherProp"
+  ></child-component>
+</ng-template>
+
+```
+
+Disposed property names can be individually assigned to template input variables.
+
+```HTML
+<!-- disposer will dispose prop1 and prop2 -->
+
+<ng-template
+  contextDisposer
+  let-prop1="someProp"
+  let-prop2="someOtherProp"
+>
+  <child-component [prop1]="prop1" [prop2]="prop2"></child-component>
+</ng-template>
+
+```
+
+Note: If you are wondering how you can implement reactive forms using Angular Context, please refer to the [demo application](https://stackblitz.com/edit/ngx-context).
+
 ## Caveats / Trade-offs
 
 There are several issues which are simply not addressed yet or impossible with currently available tools.
