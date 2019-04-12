@@ -1,4 +1,4 @@
-# ngx-context (a.k.a. Angular Context)
+# Angular Context (ngx-context)
 
 <p align="center">
   <a href="https://travis-ci.org/ng-turkey/ngx-context"><img src="https://travis-ci.org/ng-turkey/ngx-context.svg?branch=master"/></a>
@@ -19,9 +19,9 @@ Check [demo application](https://stackblitz.com/edit/ngx-context) out for a prev
 
 Data-binding and input properties are great. However, working with them has some challenges:
 
-- Passing properties through several layers of the component tree is known as prop-drilling and it is time consuming and difficult and error prone to maintain.
+- Passing properties through several layers of the component tree is known as prop-drilling and it is time consuming and error prone to maintain.
+- The intermediary components become bloated with properties and methods just to pass data from parent to child and vice versa.
 - When a component is loaded via `router-outlet`, data-binding is not available and prop-drilling is no longer an option.
-- Providing data through state management has its own caveat: Since connecting presentational (dumb) components directly to a specific state breaks their reusability, they have to be wrapped by container (smart) components instead and that usually is additional work.
 
 This library is designed to improve developer experience by fixing all issues above. It provides context through dependency injection system behind-the-scenes and lets your deeply nested dumb components consume this context easily. It is inspired by [React Context](https://reactjs.org/docs/context.html), but differs in implementation and is 100% tailored for Angular.
 
@@ -378,3 +378,5 @@ There are several issues which are simply not addressed yet or impossible with c
 - [x] CI integrations
 
 - [ ] Benchmarks
+
+- [ ] Optimization
