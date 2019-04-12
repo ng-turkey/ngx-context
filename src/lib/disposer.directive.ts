@@ -67,13 +67,13 @@ export class ContextDisposerDirective {
 
     this.view.context.$implicit[key] = value;
     this.view.context[key] = value;
-    this.view.detectChanges();
+    this.view.markForCheck();
   }
 
   ngOnChanges() {
-    this.destroy$.next();
-
+    this.ngOnDestroy();
     this.reset();
+
     if (this.provider && this.tempRef && this.vcRef) this.init();
   }
 
