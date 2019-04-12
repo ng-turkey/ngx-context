@@ -1,27 +1,72 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormControlDirective, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ContextConsumerDirective } from '../lib/consumer.directive';
 import { NgxContextModule } from '../lib/context.module';
-import { ContextProviderComponent } from '../lib/provider.component';
+import { ContextDisposerDirective } from '../lib/disposer.directive';
 import { TestConsumerComponent } from './test-consumer.component';
+import { TestDisposerComponent } from './test-disposer.component';
+import { TestFormComponent } from './test-form.component';
 import { TestMiddleComponent } from './test-middle.component';
 import { TestProviderComponent } from './test-provider.component';
 
-type TConsumer = ContextConsumerDirective<TestConsumerComponent>;
-type TProvider = ContextProviderComponent<TestProviderComponent>;
+interface IContextDisposer {
+  fixture: ComponentFixture<TestFormComponent>;
+  parent: TestFormComponent;
+  disposer: ContextDisposerDirective;
+  child: HTMLInputElement;
+}
 
-interface IContext {
+describe('Context Provider & Disposer', function(this: IContextDisposer) {
+  it('should work with reactive forms', fakeAsync(() => {
+    TestBed.overrideComponent(TestDisposerComponent, {
+      set: {
+        template: `
+          <ng-template contextDisposer let-control="checkControl">
+            <input *ngIf="control" type="checkbox" [formControl]="control">
+          </ng-template>
+        `,
+      },
+    });
+
+    TestBed.configureTestingModule({
+      imports: [NgxContextModule, ReactiveFormsModule],
+      declarations: [TestFormComponent, TestDisposerComponent],
+    }).compileComponents();
+
+    this.fixture = TestBed.createComponent(TestFormComponent);
+    this.fixture.detectChanges();
+
+    this.parent = this.fixture.debugElement.componentInstance;
+    const disposer = this.fixture.debugElement.query(By.directive(TestDisposerComponent));
+    this.disposer = disposer.componentInstance.disposer;
+
+    tick();
+    this.fixture.detectChanges();
+
+    this.child = disposer.query(By.directive(FormControlDirective)).nativeElement;
+
+    expect(this.child.checked).toBe(false);
+    expect(this.parent.checkControl.value).toBe(false);
+
+    this.child.click();
+    this.fixture.detectChanges();
+
+    expect(this.child.checked).toBe(true);
+    expect(this.parent.checkControl.value).toBe(true);
+  }));
+});
+
+interface IContextConsumer {
   fixture: ComponentFixture<TestProviderComponent>;
-  provider: TProvider;
-  consumer: TConsumer;
   parent: TestProviderComponent;
   middle: TestMiddleComponent;
   child: TestConsumerComponent;
 }
 
-describe('Context Provider & Consumer', function(this: IContext) {
+describe('Context Provider & Consumer', function(this: IContextConsumer) {
   it('should work through nested components', fakeAsync(() => {
     TestBed.overrideComponent(TestProviderComponent, {
       set: {
@@ -82,7 +127,7 @@ describe('Context Provider & Consumer', function(this: IContext) {
 type Excluded = 'provided' | 'contextMap' | 'consume';
 
 function shouldSyncProvidedProperty(
-  this: IContext,
+  this: IContextConsumer,
   prop: Exclude<keyof TestProviderComponent & keyof TestConsumerComponent, Excluded>,
 ): void {
   // Query component instances

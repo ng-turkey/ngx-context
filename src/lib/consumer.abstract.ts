@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { parseKeys } from './internals';
 import { ContextProviderComponent } from './provider.component';
 import { ContextMap } from './symbols';
@@ -46,7 +46,10 @@ export abstract class AbstractContextConsumer<T> implements OnChanges, OnDestroy
 
     if (this.provider.provide.length)
       this.provider.change$
-        .pipe(takeUntil(this.destroy$))
+        .pipe(
+          takeUntil(this.destroy$),
+          filter(key => !!key),
+        )
         .subscribe(providerKey => this.syncProperties(consumed, providerKey));
   }
 

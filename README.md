@@ -1,4 +1,5 @@
-# ngx-context (a.k.a. Angular Context)
+# Angular Context (ngx-context)
+
 <p align="center">
   <a href="https://travis-ci.org/ng-turkey/ngx-context"><img src="https://travis-ci.org/ng-turkey/ngx-context.svg?branch=master"/></a>
   <a href="https://codeclimate.com/github/ng-turkey/ngx-context/maintainability"><img src="https://api.codeclimate.com/v1/badges/5115f5820cd9dfc5c409/maintainability" /></a>
@@ -7,21 +8,22 @@
   <img src="https://img.shields.io/github/license/ng-turkey/ngx-context.svg" />
   <a href="https://twitter.com/ngTurkiye"><img src="https://img.shields.io/twitter/follow/ngTurkiye.svg?label=Follow"/></a>
 </p>
+
 Angular Context is a library to bind data to deeply nested child components **without passing properties through other components or getting blocked by a router outlet**.
 
 If you would like to have further information on why you need a library like this, you may find the [reasons](#reasons-to-use-this-library) below. Otherwise, skip to the [quickstart](#quickstart) or [usage](#usage) section.
 
-Check [sample application](https://stackblitz.com/edit/ngx-context) out for a preview.
+Check [demo application](https://stackblitz.com/edit/ngx-context) out for a preview.
 
 ## Reasons to Use This Library
 
 Data-binding and input properties are great. However, working with them has some challenges:
 
-- Passing properties through several layers of the component tree is known as prop-drilling and it is time consuming and difficult and error prone to maintain.
+- Passing properties through several layers of the component tree is known as prop-drilling and it is time consuming and error prone to maintain.
+- The intermediary components become bloated with properties and methods just to pass data from parent to child and vice versa.
 - When a component is loaded via `router-outlet`, data-binding is not available and prop-drilling is no longer an option.
-- Providing data through state management has its own caveat: Since connecting presentational (dumb) components directly to a specific state breaks their reusability, they have to be wrapped by container (smart) components instead and that usually is additional work.
 
-This library is designed to improve developer experience by fixing all issues above. It provides context through dependency injection system behind-the-scenes and lets your deeply nested dumb components consume this context easily. It is conceptually influenced by [React Context](https://reactjs.org/docs/context.html), but differs in implementation and is 100% tailored for Angular.
+This library is designed to improve developer experience by fixing all issues above. It provides context through dependency injection system behind-the-scenes and lets your deeply nested dumb components consume this context easily. It is inspired by [React Context](https://reactjs.org/docs/context.html), but differs in implementation and is 100% tailored for Angular.
 
 ![](./assets/context.svg)
 
@@ -272,6 +274,78 @@ Consumed property names can be mapped.
 
 ```
 
+### ContextDisposerDirective
+
+There are some cases where you will need the context on a higher level and end up putting properties on a middle component's class. For example, in order to make [reactive forms](https://angular.io/guide/reactive-forms) work, a `ContextConsumerComponent` will most likely be used and the consumed properties will have to be added to the wrapper component. This is usually not the preferred result. After all, we are trying to keep intermediary components as clean as possible. In such a case, you can use `ContextDisposerDirective` on an `<ng-template>` and make use of [template input variables](https://angular.io/guide/structural-directives#template-input-variable).
+
+```HTML
+<!-- disposer will dispose any property provided under context -->
+
+<ng-template contextDisposer let-context>
+  <child-component [someProp]="context.someProp"></child-component>
+</ng-template>
+
+```
+
+The name of specific props to be disposed can be set by `contextDisposer` input and it can take `string` or `Array<string>` values.
+
+```HTML
+<!-- disposer will dispose someProp and someOtherProp under context -->
+
+<ng-template contextDisposer="someProp someOtherProp" let-context>
+  <child-component
+    [prop1]="context.someProp"
+    [prop2]="context.someOtherProp"
+  ></child-component>
+</ng-template>
+
+```
+
+— or —
+
+```HTML
+<!-- disposer will dispose someProp and someOtherProp under context -->
+
+<ng-template contextDisposer="['someProp', 'someOtherProp']" let-context>
+  <child-component
+    [prop1]="context.someProp"
+    [prop2]="context.someOtherProp"
+  ></child-component>
+</ng-template>
+
+```
+
+Properties to dispose can be dynamically set.
+
+```HTML
+<!-- disposer will dispose properties defined by propertiesToDispose under context -->
+
+<ng-template [contextDisposer]="propertiesToDispose" let-context>
+  <child-component
+    [prop1]="context.someProp"
+    [prop2]="context.someOtherProp"
+  ></child-component>
+</ng-template>
+
+```
+
+Disposed property names can be individually assigned to template input variables.
+
+```HTML
+<!-- disposer will dispose prop1 and prop2 -->
+
+<ng-template
+  contextDisposer
+  let-prop1="someProp"
+  let-prop2="someOtherProp"
+>
+  <child-component [prop1]="prop1" [prop2]="prop2"></child-component>
+</ng-template>
+
+```
+
+Note: If you are wondering how you can implement reactive forms using Angular Context, please refer to the [demo application](https://stackblitz.com/edit/ngx-context).
+
 ## Caveats / Trade-offs
 
 There are several issues which are simply not addressed yet or impossible with currently available tools.
@@ -286,6 +360,8 @@ There are several issues which are simply not addressed yet or impossible with c
 - [x] Component to provide context
 
 - [x] Component and directive to consume context
+
+- [x] Directive to dispose context
 
 - [x] Test coverage
 
@@ -302,3 +378,5 @@ There are several issues which are simply not addressed yet or impossible with c
 - [x] CI integrations
 
 - [ ] Benchmarks
+
+- [ ] Optimization
