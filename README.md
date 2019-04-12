@@ -15,6 +15,8 @@ If you would like to have further information on why you need a library like thi
 
 Check [demo application](https://stackblitz.com/edit/ngx-context) out for a preview.
 
+You may also find the [introductory blog post](https://medium.com/@ozak/angular-context-easy-data-binding-for-nested-component-trees-and-the-router-outlet-a977efacd48) helpful.
+
 ## Reasons to Use This Library
 
 Data-binding and input properties are great. However, working with them has some challenges:
