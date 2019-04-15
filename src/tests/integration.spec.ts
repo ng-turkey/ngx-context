@@ -142,7 +142,13 @@ describe('Context Provider & Consumer', function(this: IContextConsumer) {
       router.navigate(['test']);
       tick();
 
+      // All properties should be synced at start
       shouldSyncProvidedProperties.call(this, props);
+
+      // And properties should be kept in sync later
+      this.parent.title = null;
+      this.fixture.detectChanges();
+      expect(this.child.title).toBeNull();
     });
   }));
 });
