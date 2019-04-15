@@ -9,7 +9,7 @@ import { ContextMap } from '../lib/symbols';
   encapsulation: ViewEncapsulation.None,
 })
 export class TestProviderComponent {
-  private _title: string;
+  private _title: string = 'Testing';
 
   greeting$ = of('Hello');
   target = 'World';
