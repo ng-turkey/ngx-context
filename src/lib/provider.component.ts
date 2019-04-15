@@ -21,9 +21,10 @@ import { ContextMap } from './symbols';
 })
 export class ContextProviderComponent<T = any> implements OnChanges, OnInit {
   private initialized = false;
-  private provided = new Map();
   private _contextMap: ContextMap = {};
   private _provide: string | string[] = '';
+
+  provided = new Map();
 
   @Input()
   set contextMap(map: ContextMap) {

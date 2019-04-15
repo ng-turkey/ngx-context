@@ -8,7 +8,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, startWith, takeUntil } from 'rxjs/operators';
 import { parseKeys } from './internals';
 import { ContextProviderComponent } from './provider.component';
 
@@ -49,6 +49,7 @@ export class ContextDisposerDirective {
       this.provider.change$
         .pipe(
           takeUntil(this.destroy$),
+          startWith(...Array.from(this.provider.provided.keys())),
           filter(key => !!key),
         )
         .subscribe(providerKey => this.syncProperties(disposed, providerKey));
