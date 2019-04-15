@@ -1,11 +1,5 @@
 import { ChangeDetectorRef } from '@angular/core';
-import {
-  ComponentFixture,
-  fakeAsync,
-  inject,
-  TestBed,
-  tick,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContextDisposerDirective } from '../lib/disposer.directive';
 import { ContextProviderComponent } from '../lib/provider.component';
 import { TestDisposerComponent } from './test-disposer.component';

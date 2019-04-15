@@ -8,6 +8,7 @@ import { NgxContextModule } from '../lib/context.module';
 import { ContextDisposerDirective } from '../lib/disposer.directive';
 import { TestConsumerComponent } from './test-consumer.component';
 import { TestDisposerComponent } from './test-disposer.component';
+import { TestDummyComponent } from './test-dummy.component';
 import { TestFormComponent } from './test-form.component';
 import { TestMiddleComponent } from './test-middle.component';
 import { TestProviderComponent } from './test-provider.component';
@@ -84,8 +85,10 @@ describe('Context Provider & Consumer', function(this: IContextConsumer) {
     }).compileComponents();
 
     this.fixture = TestBed.createComponent(TestProviderComponent);
+    const props = ['target', 'title'];
 
-    shouldSyncProvidedProperty.bind(this, 'target');
+    setProvidedProperties.call(this, props);
+    shouldSyncProvidedProperties.call(this, props);
   }));
 
   it('should work through router outlet', fakeAsync(() => {
@@ -104,34 +107,66 @@ describe('Context Provider & Consumer', function(this: IContextConsumer) {
         RouterTestingModule.withRoutes([
           {
             path: '',
+            pathMatch: 'full',
+            component: TestDummyComponent,
+          },
+          {
+            path: 'test',
             component: TestMiddleComponent,
           },
         ]),
         NgxContextModule,
       ],
-      declarations: [TestProviderComponent, TestMiddleComponent, TestConsumerComponent],
+      declarations: [
+        TestProviderComponent,
+        TestDummyComponent,
+        TestMiddleComponent,
+        TestConsumerComponent,
+      ],
     }).compileComponents();
 
-    this.fixture = TestBed.createComponent(TestProviderComponent);
+    const props = ['target', 'title'];
+    setProvidedProperties.call(this, props);
 
     this.fixture.ngZone.run(() => {
       // Navigate to base path
-      this.fixture.debugElement.injector.get(Router).initialNavigation();
+      const router = this.fixture.debugElement.injector.get(Router);
+      router.initialNavigation();
       tick();
 
-      shouldSyncProvidedProperty.bind(this, 'target');
+      // TestMiddleComponent should not be loaded at first
+      expect(
+        this.fixture.debugElement.query(By.directive(TestMiddleComponent)),
+      ).toBeNull();
+
+      router.navigate(['test']);
+      tick();
+
+      // All properties should be synced at start
+      shouldSyncProvidedProperties.call(this, props);
+
+      // And properties should be kept in sync later
+      this.parent.title = null;
+      this.fixture.detectChanges();
+      expect(this.child.title).toBeNull();
     });
   }));
 });
 
 type Excluded = 'provided' | 'contextMap' | 'consume';
+type Props = Array<
+  Exclude<keyof TestProviderComponent & keyof TestConsumerComponent, Excluded>
+>;
 
-function shouldSyncProvidedProperty(
-  this: IContextConsumer,
-  prop: Exclude<keyof TestProviderComponent & keyof TestConsumerComponent, Excluded>,
-): void {
-  // Query component instances
+function setProvidedProperties(this: IContextConsumer, props: Props): void {
+  this.fixture = TestBed.createComponent(TestProviderComponent);
   this.parent = this.fixture.debugElement.componentInstance;
+  this.parent.provided = props;
+  this.fixture.detectChanges();
+}
+
+function shouldSyncProvidedProperties(this: IContextConsumer, props: Props): void {
+  // Query component instances
   this.middle = this.fixture.debugElement.query(
     By.directive(TestMiddleComponent),
   ).componentInstance;
@@ -139,15 +174,21 @@ function shouldSyncProvidedProperty(
     By.directive(ContextConsumerDirective),
   ).componentInstance;
 
-  expect(this.child[prop]).not.toBe(this.parent[prop]);
+  // Confirm the starting value is different
+  props.forEach(prop => {
+    if (typeof this.parent[prop] !== 'undefined')
+      expect(this.child[prop]).not.toEqual(this.parent[prop]);
+  });
 
   // Provide property
-  this.parent.provided = prop;
-  this.middle.provided = prop;
+  this.middle.provided = props;
 
   // Detect changes
   this.fixture.detectChanges();
   tick();
 
-  expect(this.child[prop]).toBe(this.parent[prop]);
+  props.forEach(prop => {
+    expect(this.child[prop]).not.toBeUndefined();
+    expect(this.child[prop]).toEqual(this.parent[prop]);
+  });
 }

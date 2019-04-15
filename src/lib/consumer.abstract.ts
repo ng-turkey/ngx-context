@@ -1,16 +1,17 @@
 import { ChangeDetectorRef, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, startWith, takeUntil } from 'rxjs/operators';
 import { parseKeys } from './internals';
 import { ContextProviderComponent } from './provider.component';
 import { ContextMap } from './symbols';
 
 export abstract class AbstractContextConsumer<T> implements OnChanges, OnDestroy, OnInit {
-  protected consumed = new Map();
   protected destroy$ = new Subject<void>();
   protected initialized: boolean;
   protected _contextMap = {};
   protected _consume: string | string[] = '';
+
+  consumed = new Map();
 
   @Input()
   set contextMap(map: ContextMap) {
@@ -48,6 +49,7 @@ export abstract class AbstractContextConsumer<T> implements OnChanges, OnDestroy
       this.provider.change$
         .pipe(
           takeUntil(this.destroy$),
+          startWith(...Array.from(this.provider.provided.keys())),
           filter(key => !!key),
         )
         .subscribe(providerKey => this.syncProperties(consumed, providerKey));

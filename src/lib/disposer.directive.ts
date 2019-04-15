@@ -2,20 +2,26 @@ import {
   Directive,
   EmbeddedViewRef,
   Input,
+  OnChanges,
+  OnDestroy,
   Optional,
   SkipSelf,
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, startWith, takeUntil } from 'rxjs/operators';
 import { parseKeys } from './internals';
 import { ContextProviderComponent } from './provider.component';
+
+export class Context {
+  $implicit: { [key: string]: any } = {};
+}
 
 @Directive({
   selector: '[contextDisposer]',
 })
-export class ContextDisposerDirective {
+export class ContextDisposerDirective implements OnChanges, OnDestroy {
   private destroy$ = new Subject<void>();
   private _dispose: string | string[] = '';
   private view: EmbeddedViewRef<any>;
@@ -49,6 +55,7 @@ export class ContextDisposerDirective {
       this.provider.change$
         .pipe(
           takeUntil(this.destroy$),
+          startWith(...Array.from(this.provider.provided.keys())),
           filter(key => !!key),
         )
         .subscribe(providerKey => this.syncProperties(disposed, providerKey));
@@ -82,8 +89,4 @@ export class ContextDisposerDirective {
 
     if (this.view) this.vcRef.clear();
   }
-}
-
-export class Context {
-  $implicit: { [key: string]: any } = {};
 }
