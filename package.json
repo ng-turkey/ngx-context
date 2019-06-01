@@ -1,6 +1,6 @@
 {
   "name": "ngx-context",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -53,5 +53,8 @@
     "tslib": "^1.9.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"
+  },
+  "resolutions": {
+    "fstream": "^1.0.12"
   }
 }
