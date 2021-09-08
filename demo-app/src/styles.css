@@ -1,0 +1,28 @@
+/* Add application styles & imports to this file! */
+body {
+  color: #545a5e;
+  padding: 3rem;
+}
+
+one-way,
+two-way {
+  display: block;
+  margin-bottom: 3rem;
+}
+
+rating {
+  margin-left: .25rem;
+}
+
+rating > :focus {
+  outline: none;
+}
+
+.bs-rating-star.active {
+  color: #17a2b8;
+}
+
+pre {
+  color: #545a5e;
+  margin: -1.5rem -3.25rem;
+}
