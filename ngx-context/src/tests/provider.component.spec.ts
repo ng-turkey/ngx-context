@@ -232,7 +232,7 @@ function shouldCastPropertyNameWhenChanged(
       complete: () => (cast = true),
     });
 
-  this.component[provided] = 'Test';
+  (this.component as any)[provided] = 'Test';
   tick();
 
   expect(cast).toBe(true);

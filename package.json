@@ -4,13 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --project demo-app",
-    "build": "ng build",
+    "build": "ng build ngx-context --configuration production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ci-test": "ng test ngx-context --code-coverage --watch=false",
-    "release": "cp README.md dist/ngx-context/README.md && cd dist/ngx-context && npm publish && cd ../..",
-    "verdaccio": "cd dist/ngx-context && npm publish --registry http://localhost:4873 && cd ../..",
+    "release": "yarn build && cp README.md dist/ngx-context/README.md && cd dist/ngx-context && npm publish && cd ../..",
+    "verdaccio": "yarn build && cd dist/ngx-context && npm publish --registry http://localhost:4873 && cd ../..",
     "unverdaccio": "cd dist/ngx-context && npm unpublish --registry http://localhost:4873 --force && cd ../..",
     "compile:ivy": "yarn ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points --tsconfig './tsconfig.prod.json' --source node_modules",
     "postinstall": "yarn compile:ivy"
