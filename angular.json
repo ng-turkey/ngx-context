@@ -66,25 +66,25 @@
           "strict": true
         }
       },
-      "root": "demo-app",
-      "sourceRoot": "demo-app/src",
+      "root": "projects/demo-app",
+      "sourceRoot": "projects/demo-app/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/demo-app",
-            "index": "demo-app/src/index.html",
-            "main": "demo-app/src/main.ts",
-            "polyfills": "demo-app/src/polyfills.ts",
-            "tsConfig": "demo-app/tsconfig.app.json",
+            "index": "projects/demo-app/src/index.html",
+            "main": "projects/demo-app/src/main.ts",
+            "polyfills": "projects/demo-app/src/polyfills.ts",
+            "tsConfig": "projects/demo-app/tsconfig.app.json",
             "assets": [
-              "demo-app/src/favicon.ico",
-              "demo-app/src/assets"
+              "projects/demo-app/src/favicon.ico",
+              "projects/demo-app/src/assets"
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "demo-app/src/styles.css"
+              "projects/demo-app/src/styles.css"
             ],
             "scripts": []
           },
@@ -104,8 +104,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "demo-app/src/environments/environment.ts",
-                  "with": "demo-app/src/environments/environment.prod.ts"
+                  "replace": "projects/demo-app/src/environments/environment.ts",
+                  "with": "projects/demo-app/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -142,16 +142,16 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "demo-app/src/test.ts",
-            "polyfills": "demo-app/src/polyfills.ts",
-            "tsConfig": "demo-app/tsconfig.spec.json",
-            "karmaConfig": "demo-app/karma.conf.js",
+            "main": "projects/demo-app/src/test.ts",
+            "polyfills": "projects/demo-app/src/polyfills.ts",
+            "tsConfig": "projects/demo-app/tsconfig.spec.json",
+            "karmaConfig": "projects/demo-app/karma.conf.js",
             "assets": [
-              "demo-app/src/favicon.ico",
-              "demo-app/src/assets"
+              "projects/demo-app/src/favicon.ico",
+              "projects/demo-app/src/assets"
             ],
             "styles": [
-              "demo-app/src/styles.css"
+              "projects/demo-app/src/styles.css"
             ],
             "scripts": []
           }
