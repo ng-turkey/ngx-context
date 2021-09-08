@@ -20,10 +20,10 @@
     ],
     "paths": {
       "ngx-context": [
-        "ngx-context/public-api.ts"
+        "projects/ngx-context/public-api.ts"
       ],
       "ngx-context/*": [
-        "ngx-context/lib/*"
+        "projects/ngx-context/lib/*"
       ]
     }
   }

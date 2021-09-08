@@ -3,7 +3,7 @@
   "version": "1.1.2",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --project demo-app",
+    "start": "ng serve demo-app",
     "build": "ng build ngx-context --configuration production",
     "test": "ng test",
     "lint": "ng lint",
