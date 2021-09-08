@@ -7,7 +7,7 @@ import {
   OnInit,
   Optional,
   SkipSelf,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 import { isSubscribableOrPromise, parseKeys } from './internals';
@@ -43,7 +43,7 @@ export class ContextProviderComponent<T = any> implements OnChanges, OnInit {
   }
 
   get component(): T {
-    return this.source['_view'].component;
+    return this.source['_view']?.component || this.source['context']
   }
 
   change$ = new ReplaySubject<string>(1);
@@ -53,7 +53,8 @@ export class ContextProviderComponent<T = any> implements OnChanges, OnInit {
     @Optional()
     @SkipSelf()
     private source: ChangeDetectorRef,
-  ) {}
+  ) {
+  }
 
   private init() {
     setTimeout(() => {
