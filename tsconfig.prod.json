@@ -17,14 +17,6 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "paths": {
-      "ngx-context": [
-        "src/public_api.ts"
-      ],
-      "ngx-context/*": [
-        "src/lib/*"
-      ]
-    }
+    ]
   }
 }
