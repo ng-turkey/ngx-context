@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ContextDisposerDirective } from '../lib/disposer.directive';
 
 @Component({
@@ -13,7 +8,7 @@ import { ContextDisposerDirective } from '../lib/disposer.directive';
   encapsulation: ViewEncapsulation.None,
 })
 export class TestDisposerComponent {
-  @ViewChild(ContextDisposerDirective)
+  @ViewChild(ContextDisposerDirective, { static: true })
   disposer: ContextDisposerDirective;
 
   provided: string | string[] = '';

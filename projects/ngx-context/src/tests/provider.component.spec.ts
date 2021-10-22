@@ -13,7 +13,7 @@ interface UProviderComponent {
   provider: TProvider;
 }
 
-describe('ContextProviderComponent', function(this: UProviderComponent) {
+describe('ContextProviderComponent', function (this: UProviderComponent) {
   describe('with source', () => {
     beforeEach(() => {
       this.component = new TestProviderComponent();
@@ -70,9 +70,9 @@ describe('ContextProviderComponent', function(this: UProviderComponent) {
       expect(this.provider.ngOnChanges).toHaveBeenCalledTimes(1);
     });
 
-    it('should cast void as reset$ on init', done => {
+    it('should cast void as reset$ on init', (done) => {
       this.provider.reset$.pipe(take(1)).subscribe({
-        next: value => expect(value).toBeUndefined(),
+        next: (value) => expect(value).toBeUndefined(),
         complete: () => done(),
       });
 
@@ -99,61 +99,46 @@ describe('ContextProviderComponent', function(this: UProviderComponent) {
       expect(i).toBe(2);
     }));
 
-    it('should cast empty string as change$ on init', done => {
+    it('should cast empty string as change$ on init', (done) => {
       this.provider.change$.pipe(take(1)).subscribe({
-        next: value => expect(value).toBe(''),
+        next: (value) => expect(value).toBe(''),
         complete: () => done(),
       });
 
       this.fixture.detectChanges();
     });
 
-    it('should cast property names provided as change$ (string input)', done => {
+    it('should cast property names provided as change$ (string input)', (done) => {
       const provided = ['greeting$', 'target'];
       const { length } = provided;
       let i = 0;
 
-      this.provider.change$
-        .pipe(
-          skipResetEmptyString(),
-          take(length),
-        )
-        .subscribe({
-          next: key => expect(key).toBe(provided[i++]),
-          complete: () => done(),
-        });
+      this.provider.change$.pipe(skipResetEmptyString(), take(length)).subscribe({
+        next: (key) => expect(key).toBe(provided[i++]),
+        complete: () => done(),
+      });
 
       setProp.call(this, 'provide', provided.join(' '));
     });
 
-    it('should cast property names provided as change$ (array input)', done => {
+    it('should cast property names provided as change$ (array input)', (done) => {
       const provided = ['greeting$', 'target'];
       const { length } = provided;
       let i = 0;
 
-      this.provider.change$
-        .pipe(
-          skipResetEmptyString(),
-          take(length),
-        )
-        .subscribe({
-          next: key => expect(key).toBe(provided[i++]),
-          complete: () => done(),
-        });
+      this.provider.change$.pipe(skipResetEmptyString(), take(length)).subscribe({
+        next: (key) => expect(key).toBe(provided[i++]),
+        complete: () => done(),
+      });
 
       setProp.call(this, 'provide', provided);
     });
 
-    it('should not cast a property name provided as change$ unless a property of component', done => {
-      this.provider.change$
-        .pipe(
-          skipResetEmptyString(),
-          take(1),
-        )
-        .subscribe({
-          next: key => expect(key).toBe('target'),
-          complete: () => done(),
-        });
+    it('should not cast a property name provided as change$ unless a property of component', (done) => {
+      this.provider.change$.pipe(skipResetEmptyString(), take(1)).subscribe({
+        next: (key) => expect(key).toBe('target'),
+        complete: () => done(),
+      });
 
       setProp.call(this, 'provide', 'test target check');
     });
@@ -169,6 +154,8 @@ describe('ContextProviderComponent', function(this: UProviderComponent) {
 
   describe('without source', () => {
     beforeEach(() => {
+      this.component = new TestProviderComponent();
+
       TestBed.configureTestingModule({
         declarations: [ContextProviderComponent],
         providers: [{ provide: ChangeDetectorRef, useValue: null }],
@@ -178,21 +165,16 @@ describe('ContextProviderComponent', function(this: UProviderComponent) {
       this.provider = this.fixture.debugElement.componentInstance;
     });
 
-    it('should not cast property names provided as change$', done => {
+    it('should not cast property names provided as change$', (done) => {
       let called = false;
 
-      this.provider.change$
-        .pipe(
-          timeout(3000),
-          skipResetEmptyString(),
-        )
-        .subscribe({
-          next: () => (called = true),
-          error: () => {
-            expect(called).toBe(false);
-            done();
-          },
-        });
+      this.provider.change$.pipe(timeout(3000), skipResetEmptyString()).subscribe({
+        next: () => (called = true),
+        error: () => {
+          expect(called).toBe(false);
+          done();
+        },
+      });
 
       const provided = 'target';
       setProp.call(this, 'provide', provided);
@@ -225,7 +207,7 @@ function shouldCastPropertyNameWhenChanged(
   this.provider.change$
     .pipe(
       skipResetEmptyString(),
-      filter(key => key === provided),
+      filter((key) => key === provided),
       take(2),
     )
     .subscribe({
@@ -239,5 +221,5 @@ function shouldCastPropertyNameWhenChanged(
 }
 
 function skipResetEmptyString(): MonoTypeOperatorFunction<string> {
-  return filter<string>(key => !!key);
+  return filter<string>((key) => !!key);
 }
