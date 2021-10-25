@@ -12,12 +12,12 @@ export interface UDisposerDirective {
   provider: ContextProviderComponent<TestProviderComponent>;
 }
 
-describe('ContextDisposerDirective', function(this: UDisposerDirective) {
+describe('ContextDisposerDirective', function (this: UDisposerDirective) {
   describe('implicitly', () => {
     beforeEach(() => {
-      this.provider = new ContextProviderComponent(({
+      this.provider = new ContextProviderComponent({
         _view: { component: new TestProviderComponent() },
-      } as any) as ChangeDetectorRef);
+      } as any as ChangeDetectorRef);
 
       TestBed.overrideComponent(TestDisposerComponent, {
         set: {
@@ -36,6 +36,7 @@ describe('ContextDisposerDirective', function(this: UDisposerDirective) {
       this.fixture = TestBed.createComponent(TestDisposerComponent);
       this.element = this.fixture.nativeElement;
       this.disposer = this.fixture.componentInstance.disposer;
+
       this.disposer['provider'] = this.provider as any;
     });
 
@@ -88,9 +89,9 @@ describe('ContextDisposerDirective', function(this: UDisposerDirective) {
 
   describe('explicitly', () => {
     beforeEach(() => {
-      this.provider = new ContextProviderComponent(({
+      this.provider = new ContextProviderComponent({
         _view: { component: new TestProviderComponent() },
-      } as any) as ChangeDetectorRef);
+      } as any as ChangeDetectorRef);
 
       TestBed.overrideComponent(TestDisposerComponent, {
         set: {
