@@ -1,11 +1,12 @@
-import { ChangeDetectorRef, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Directive, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { filter, startWith, takeUntil } from 'rxjs/operators';
 import { parseKeys } from './internals';
 import { ContextProviderComponent } from './provider.component';
 import { ContextMap } from './symbols';
 
-export abstract class AbstractContextConsumer<T> implements OnChanges, OnDestroy, OnInit {
+@Directive()
+export class AbstractContextConsumer<T> implements OnChanges, OnDestroy, OnInit {
   protected destroy$ = new Subject<void>();
   protected initialized: boolean;
   protected _contextMap = {};
@@ -30,7 +31,7 @@ export abstract class AbstractContextConsumer<T> implements OnChanges, OnDestroy
   }
 
   get component(): T {
-    return this.target['_view'].component;
+    return this.target['_view']?.component || this.target['context']
   }
 
   constructor(

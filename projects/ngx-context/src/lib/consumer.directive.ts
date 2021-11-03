@@ -4,7 +4,7 @@ import {
   Host,
   Input,
   Optional,
-  SkipSelf,
+  SkipSelf
 } from '@angular/core';
 import { AbstractContextConsumer } from './consumer.abstract';
 import { ContextProviderComponent } from './provider.component';
@@ -14,7 +14,12 @@ import { ContextProviderComponent } from './provider.component';
 })
 export class ContextConsumerDirective<T = any> extends AbstractContextConsumer<T> {
   @Input('contextConsumer')
-  consume: string | string[] = '';
+  set consume(consume: string | string[]) {
+    this._consume = consume || '';
+  }
+  get consume(): string | string[] {
+    return this._consume;
+  }
 
   constructor(
     @Optional()
